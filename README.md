@@ -2,7 +2,7 @@
 
 Create by ELD games. Special thanks to E and L for contributing to art work and sounds
 
-![logo](logo.gif =50x)
+<img src="logo.gif" width="45">
 
 # Game Introduction
 
