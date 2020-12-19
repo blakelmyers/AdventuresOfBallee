@@ -1,3 +1,9 @@
+# Developer
+
+Create by ELD games. Special thanks to E and L for contributing to art work and sounds
+
+![logo](logo.gif)
+
 # Game Introduction
 
 ![title](title.JPG)
