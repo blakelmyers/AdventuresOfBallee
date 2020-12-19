@@ -1,6 +1,6 @@
 # Game Introduction
 
-![title](title.jpg)
+![title](title.JPG)
 
 This is a 2D-RPG strawberry hunter game. The user controls our hero to collect all 15 strawberries to win. To achieve the goal, the player need to find item axe and boat as well.  (The code is only tested on Java 11)
 
