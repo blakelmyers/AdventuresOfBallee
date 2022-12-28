@@ -23,6 +23,12 @@ import com.eld.AdventuresOfBallee.TileMap.TileMap;
 import com.eld.MapViewer.Main.MapMain;
 import com.studiohartman.jamepad.*;
 
+import com.pi4j.io.gpio.GpioController;
+import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.GpioPinDigitalInput;
+import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.RaspiPin;
+
 public class PlayState extends GameState {
 	
 	// player
@@ -43,7 +49,8 @@ public class PlayState extends GameState {
 	// camera position
 	private int xsector;
 	private int ysector;
-	private int sectorSize; 
+	private int sectorSizeX; 
+	private int sectorSizeY; 
 	
 	// hud
 	private Hud hud;
@@ -54,6 +61,13 @@ public class PlayState extends GameState {
 	private boolean eventFinish;
 	private int eventTick;
 	private ControllerManager controllers;
+
+	private GpioController gpio;
+	private GpioPinDigitalInput myDownButton;
+	private GpioPinDigitalInput myUpButton;
+	private GpioPinDigitalInput myLeftButton;
+	private GpioPinDigitalInput myRightButton;
+	private GpioPinDigitalInput myAButton;
 	
 	// transition box
 	private ArrayList<Rectangle> boxes;
@@ -64,6 +78,28 @@ public class PlayState extends GameState {
 	
 	public void init() {
 		
+		gpio = GpioFactory.getInstance();
+
+		myDownButton = gpio. provisionDigitalInputPin(RaspiPin.GPIO_22,             // PIN NUMBER
+                                                                     "MyDownButton",                   // PIN FRIENDLY NAME (optional)
+                                                                     PinPullResistance.PULL_DOWN); // PIN RESISTANCE (optional)
+
+		myUpButton = gpio. provisionDigitalInputPin(RaspiPin.GPIO_21,             // PIN NUMBER
+		                                                             "MyUpButton",                   // PIN FRIENDLY NAME (optional)
+		                                                             PinPullResistance.PULL_DOWN); // PIN RESISTANCE (optional)
+
+		myLeftButton = gpio. provisionDigitalInputPin(RaspiPin.GPIO_23,             // PIN NUMBER
+		                                                             "MyLeftButton",                   // PIN FRIENDLY NAME (optional)
+		                                                             PinPullResistance.PULL_DOWN); // PIN RESISTANCE (optional)
+
+		myRightButton = gpio. provisionDigitalInputPin(RaspiPin.GPIO_24,             // PIN NUMBER
+		                                                             "MyRightButton",                   // PIN FRIENDLY NAME (optional)
+		                                                             PinPullResistance.PULL_DOWN); // PIN RESISTANCE (optional)
+
+		myAButton = gpio. provisionDigitalInputPin(RaspiPin.GPIO_25,             // PIN NUMBER
+		                                                             "MyAButton",                   // PIN FRIENDLY NAME (optional)
+		                                                             PinPullResistance.PULL_DOWN); // PIN RESISTANCE (optional)
+
 		// create lists
 		diamonds = new ArrayList<Diamond>();
 		sparkles = new ArrayList<Sparkle>();
@@ -86,10 +122,11 @@ public class PlayState extends GameState {
 		player.setTotalDiamonds(diamonds.size());
 		
 		// set up camera position
-		sectorSize = GamePanel.WIDTH;
-		xsector = player.getx() / sectorSize;
-		ysector = player.gety() / sectorSize;
-		tileMap.setPositionImmediately(-xsector * sectorSize, -ysector * sectorSize);
+		sectorSizeX = GamePanel.WIDTH;
+		sectorSizeY = GamePanel.HEIGHT;
+		xsector = player.getx() / sectorSizeX;
+		ysector = player.gety() / sectorSizeY;
+		tileMap.setPositionImmediately(-xsector * sectorSizeX, -ysector * sectorSizeY);
 		
 		// load hud
 		hud = new Hud(player, diamonds);
@@ -184,10 +221,10 @@ public class PlayState extends GameState {
 		item = new Item(tileMap);
 		item.setType(Item.AXE);
 		if (MapMain.viewerLaunch == false) {
-			item.setTilePosition(26, 37);
+			item.setTilePosition(17, 19);
 		}
 		else if (MapMain.tileMapViewer.getAxeRow() == -1 && MapMain.tileMapViewer.getAxeCol() == -1) {
-			item.setTilePosition(26, 37);	
+			item.setTilePosition(17, 19);	
 		}
 		else {
 			item.setTilePosition(MapMain.tileMapViewer.getAxeRow(), MapMain.tileMapViewer.getAxeCol());
@@ -227,9 +264,9 @@ public class PlayState extends GameState {
 		// update camera
 		int oldxs = xsector;
 		int oldys = ysector;
-		xsector = player.getx() / sectorSize;
-		ysector = player.gety() / sectorSize;
-		tileMap.setPosition(-xsector * sectorSize, -ysector * sectorSize);
+		xsector = player.getx() / sectorSizeX;
+		ysector = player.gety() / sectorSizeY;
+		tileMap.setPosition(-xsector * sectorSizeX, -ysector * sectorSizeY);
 		tileMap.update();
 		
 		if(oldxs != xsector || oldys != ysector) {
@@ -339,16 +376,50 @@ public class PlayState extends GameState {
 	
 	public void handleInput() {
 
-		ControllerIndex currController = controllers.getControllerIndex(0);
-
-		ControllerState currState = controllers.getState(0);
-
-		controllers.update();
 		boolean upStick = false;
 		boolean downStick = false;
 		boolean leftStick = false;
 		boolean rightStick = false;
 		boolean aButton = false;
+
+		boolean downPressed = myDownButton.isLow();
+
+		if (downPressed)
+		{
+			downStick = true;
+		}
+		
+		boolean upPressed = myUpButton.isLow();
+
+		if (upPressed)
+		{
+			upStick = true;
+		}
+		
+		boolean leftPressed = myLeftButton.isLow();
+
+		if (leftPressed)
+		{
+			leftStick = true;
+		}
+		
+		boolean rightPressed = myRightButton.isLow();
+
+		if (rightPressed)
+		{
+			rightStick = true;
+		}
+		
+		boolean aPressed = myAButton.isLow();
+
+		if (aPressed)
+		{
+			aButton = true;
+		}
+
+		ControllerIndex currController = controllers.getControllerIndex(0);
+
+		controllers.update();
 
 		try {
 			if(currController.isButtonPressed(ControllerButton.A)) {

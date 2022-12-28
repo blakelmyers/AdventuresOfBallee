@@ -10,7 +10,7 @@ public class Game {
 	
 	public static void main(String[] args) {
 		
-		JFrame window = new JFrame("The Adventures of Ballee");
+		JFrame window = new JFrame("The Adventures of toad");
 		
 		window.add(new GamePanel());
 		

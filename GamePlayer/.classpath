@@ -7,5 +7,14 @@
 	<classpathentry kind="lib" path="Libs/jl1.0.1.jar"/>
 	<classpathentry kind="lib" path="Libs/mp3spi1.9.5.jar"/>
 	<classpathentry kind="lib" path="Libs/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="Libs/Jamepad.jar"/>
+	<classpathentry kind="lib" path="/opt/pi4j/lib/pi4j-core.jar"/>
+    <classpathentry kind="lib" path="/usr/share/java/javafx-base-11.jar"/>
+    <classpathentry kind="lib" path="/usr/share/java/javafx-controls-11.jar"/>
+    <classpathentry kind="lib" path="/usr/share/java/javafx-fxml-11.jar"/>
+    <classpathentry kind="lib" path="/usr/share/java/javafx-graphics-11.jar"/>
+    <classpathentry kind="lib" path="/usr/share/java/javafx-media-11.jar"/>
+    <classpathentry kind="lib" path="/usr/share/java/javafx-swing-11.jar"/>
+    <classpathentry kind="lib" path="/usr/share/java/javafx-web-11.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

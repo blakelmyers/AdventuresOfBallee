@@ -50,7 +50,7 @@ public class Hud {
 	public void draw(Graphics2D g) {
 		
 		// draw hud
-		g.drawImage(bar, 0, yoffset, null);
+		g.drawImage(bar, 64, yoffset, null);
 		
 		// draw diamond bar
 		g.setColor(textColor);
