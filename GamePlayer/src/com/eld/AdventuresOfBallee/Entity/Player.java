@@ -40,6 +40,7 @@ public class Player extends Entity {
 	private int totalDiamonds;
 	private boolean hasBoat;
 	private boolean hasAxe;
+	private boolean hasKey;
 	private boolean onWater;
 	private long ticks;
 	
@@ -83,8 +84,10 @@ public class Player extends Entity {
 	
 	public void gotBoat() { hasBoat = true; tileMap.replace(22, 4); }
 	public void gotAxe() { hasAxe = true; }
+	public void gotKey() { hasKey = true; }
 	public boolean hasBoat() { return hasBoat; }
 	public boolean hasAxe() { return hasAxe; }
+	public boolean hasKey() { return hasKey; }
 	
 	// Used to update time.
 	public long getTicks() { return ticks; }
@@ -121,6 +124,23 @@ public class Player extends Entity {
 				JukeBox.play("tilechange");
 			}
 			if(currentAnimation == RIGHT && tileMap.getIndex(rowTile, colTile + 1) == 21) {
+				tileMap.setTile(rowTile, colTile + 1, 1);
+				JukeBox.play("tilechange");
+			}
+		}if(hasKey) {
+			if(currentAnimation == UP && tileMap.getIndex(rowTile - 1, colTile) == 25) {
+				tileMap.setTile(rowTile - 1, colTile, 1);
+				JukeBox.play("tilechange");
+			}
+			if(currentAnimation == DOWN && tileMap.getIndex(rowTile + 1, colTile) == 25) {
+				tileMap.setTile(rowTile + 1, colTile, 1);
+				JukeBox.play("tilechange");
+			}
+			if(currentAnimation == LEFT && tileMap.getIndex(rowTile, colTile - 1) == 25) {
+				tileMap.setTile(rowTile, colTile - 1, 1);
+				JukeBox.play("tilechange");
+			}
+			if(currentAnimation == RIGHT && tileMap.getIndex(rowTile, colTile + 1) == 25) {
 				tileMap.setTile(rowTile, colTile + 1, 1);
 				JukeBox.play("tilechange");
 			}

@@ -1,5 +1,5 @@
 // Possibly redundant subclass of Entity.
-// There are two types of items: Axe and boat.
+// There are three types of items: Axe, bubble, and key.
 // Upon collection, informs the Player
 // that the Player does indeed have the item.
 
@@ -17,6 +17,7 @@ public class Item extends Entity{
 	private int type;
 	public static final int BOAT = 0;
 	public static final int AXE = 1;
+	public static final int KEY= 2;
 	
 	public Item(TileMap tm) {
 		super(tm);
@@ -33,6 +34,9 @@ public class Item extends Entity{
 		else if(type == AXE) {
 			sprite = Content.ITEMS[1][1];
 		}
+		else if(type == KEY) {
+			sprite = Content.ITEMS[1][2];
+		}
 	}
 	
 	public void collected(Player p) {
@@ -41,6 +45,9 @@ public class Item extends Entity{
 		}
 		if(type == AXE) {
 			p.gotAxe();
+		}
+		if(type == KEY) {
+			p.gotKey();
 		}
 	}
 	

@@ -24,6 +24,9 @@ public class MainController {
 	private Label axePosition;
 
 	@FXML
+	private Label keyPosition;
+
+	@FXML
 	private Label boatPosition;
 
 

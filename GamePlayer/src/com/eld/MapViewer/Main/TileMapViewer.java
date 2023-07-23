@@ -26,6 +26,8 @@ public class TileMapViewer implements ItemPosition {
 	private int boatCol = -1;
 	private int axeRow = -1;
 	private int axeCol = -1;
+	private int keyRow = -1;
+	private int keyCol = -1;
 	
 	
 	public int getBoatRow() {
@@ -39,6 +41,12 @@ public class TileMapViewer implements ItemPosition {
 	}
 	public int getAxeCol() {
 		return axeCol;
+	}
+	public int getKeyRow() {
+		return keyRow;
+	}
+	public int getKeyCol() {
+		return keyCol;
 	}
 	
 	private final int BOAT = 0;

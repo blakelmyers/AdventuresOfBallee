@@ -5,4 +5,6 @@ public interface ItemPosition {
 	public int getBoatCol();
 	public int getAxeRow();
 	public int getAxeCol();
+	public int getKeyRow();
+	public int getKeyCol();
 }

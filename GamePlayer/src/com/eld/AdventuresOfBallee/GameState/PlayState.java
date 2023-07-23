@@ -43,7 +43,8 @@ public class PlayState extends GameState {
 	// camera position
 	private int xsector;
 	private int ysector;
-	private int sectorSize; 
+	private int sectorSizeX; 
+	private int sectorSizeY; 
 	
 	// hud
 	private Hud hud;
@@ -71,7 +72,7 @@ public class PlayState extends GameState {
 		
 		// load map
 		tileMap = new TileMap(16);
-		tileMap.loadTiles("/Tilesets/testtileset.gif");
+		tileMap.loadTiles("/Tilesets/tileset.png");
 		tileMap.loadMap("/Maps/testmap.map");
 		
 		// create player
@@ -82,14 +83,15 @@ public class PlayState extends GameState {
 		populateItems();
 		
 		// initialize player
-		player.setTilePosition(17, 17);
+		player.setTilePosition(18, 18);
 		player.setTotalDiamonds(diamonds.size());
 		
 		// set up camera position
-		sectorSize = GamePanel.WIDTH;
-		xsector = player.getx() / sectorSize;
-		ysector = player.gety() / sectorSize;
-		tileMap.setPositionImmediately(-xsector * sectorSize, -ysector * sectorSize);
+		sectorSizeX = GamePanel.WIDTH;
+		sectorSizeY = GamePanel.HEIGHT;
+		xsector = player.getx() / sectorSizeX;
+		ysector = player.gety() / sectorSizeY;
+		tileMap.setPositionImmediately(-xsector * sectorSizeX, -ysector * sectorSizeY);
 		
 		// load hud
 		hud = new Hud(player, diamonds);
@@ -184,10 +186,10 @@ public class PlayState extends GameState {
 		item = new Item(tileMap);
 		item.setType(Item.AXE);
 		if (MapMain.viewerLaunch == false) {
-			item.setTilePosition(26, 37);
+			item.setTilePosition(10, 6);
 		}
 		else if (MapMain.tileMapViewer.getAxeRow() == -1 && MapMain.tileMapViewer.getAxeCol() == -1) {
-			item.setTilePosition(26, 37);	
+			item.setTilePosition(6, 10);	
 		}
 		else {
 			item.setTilePosition(MapMain.tileMapViewer.getAxeRow(), MapMain.tileMapViewer.getAxeCol());
@@ -199,13 +201,27 @@ public class PlayState extends GameState {
 		item.setType(Item.BOAT);
 		
 		if (MapMain.viewerLaunch == false) {
-			item.setTilePosition(12, 4);
+			item.setTilePosition(1, 39);
 		}
 		else if (MapMain.tileMapViewer.getBoatRow() == -1 && MapMain.tileMapViewer.getBoatCol() == -1) {
-			item.setTilePosition(12, 4);	
+			item.setTilePosition(39, 3);	
 		}
 		else {
 			item.setTilePosition(MapMain.tileMapViewer.getBoatRow(), MapMain.tileMapViewer.getBoatCol());
+		}
+		items.add(item);
+
+		item = new Item(tileMap);
+		item.setType(Item.KEY);
+		
+		if (MapMain.viewerLaunch == false) {
+			item.setTilePosition(49, 45);
+		}
+		else if (MapMain.tileMapViewer.getBoatRow() == -1 && MapMain.tileMapViewer.getKeyCol() == -1) {
+			item.setTilePosition(45, 51);	
+		}
+		else {
+			item.setTilePosition(MapMain.tileMapViewer.getKeyRow(), MapMain.tileMapViewer.getKeyCol());
 		}
 		items.add(item);
 		
@@ -227,9 +243,9 @@ public class PlayState extends GameState {
 		// update camera
 		int oldxs = xsector;
 		int oldys = ysector;
-		xsector = player.getx() / sectorSize;
-		ysector = player.gety() / sectorSize;
-		tileMap.setPosition(-xsector * sectorSize, -ysector * sectorSize);
+		xsector = player.getx() / sectorSizeX;
+		ysector = player.gety() / sectorSizeY;
+		tileMap.setPosition(-xsector * sectorSizeX, -ysector * sectorSizeY);
 		tileMap.update();
 		
 		if(oldxs != xsector || oldys != ysector) {
